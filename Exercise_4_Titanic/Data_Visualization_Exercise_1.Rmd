@@ -1,0 +1,50 @@
+---
+title: 'Exercise 1 : Data Visualization with ggplot2 (Titanic)'
+author: "Shyamala Gurumurthy"
+date: "January 9, 2018"
+output: 
+  html_document: 
+    theme: yeti
+---
+
+```{r setup, include=FALSE}
+library(readr)
+library(ggplot2)
+library(dplyr)
+knitr::opts_chunk$set(cache=TRUE, message=FALSE, warning=FALSE)
+```
+
+```{r}
+titanic <- read_csv("C:/Users/User/Desktop/R_Practice/Exercise_4_Titanic/titanic.csv", n_max = 1309)
+```
+
+
+##### 1. Have a look at the titanic dataset, which has been loaded.
+```{r}
+glimpse(titanic)
+```
+
+
+##### 2. Plot the distribution of sexes within the classes of the ship. Use ggplot() with the data layer set to titanic. Map pclass onto the x axis, sex onto fill and draw a dodged bar plot using geom_bar().
+```{r}
+ggplot(titanic, aes(x = pclass, fill = sex)) +
+  geom_bar (position = "dodge")
+```
+
+
+##### 3. Copy the previous bar plot and add a facet_grid() layer: . ~ Survived to estimate your chances of survival.
+```{r}
+ggplot(titanic, aes(x = pclass, fill = sex)) +
+  geom_bar (position = "dodge") + 
+  facet_grid(.~ survived)
+```
+
+
+##### 4. Add a mapping of Age onto the y aesthetic and map sex onto color. Change geom_bar() to geom_point() and set its attributes size = 3, alpha = 0.5 and position = posn.jd. 
+```{r}
+posn.jd <- position_jitterdodge(0.5, 0, 0.6)
+
+ggplot(titanic, aes(x =pclass, y = age, col = sex)) +
+  geom_point(position = posn.jd, size = 3, alpha = 0.5) + 
+  facet_grid(.~ survived)
+```
